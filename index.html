@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cravex - Home</title>
+  <link rel="icon" href="Logo.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top, #1a001f, #000);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .logo {
+      font-size: 4rem;
+      color: #c77dff;
+      text-shadow: 0 0 20px #c77dff, 0 0 40px #9c6cff;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px #9c6cff, 0 0 20px #5e2bff; }
+      50% { text-shadow: 0 0 25px #c77dff, 0 0 50px #9c6cff; }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin: 1rem 0 2rem;
+      color: #ccc;
+      opacity: 0.85;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border: 2px solid #9c6cff;
+      background: transparent;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #9c6cff;
+      box-shadow: 0 0 20px #9c6cff, 0 0 40px #5e2bff;
+      transform: scale(1.05);
+    }
+
+    .features {
+      padding: 4rem 2rem;
+      background: #0b0012;
+      text-align: center;
+    }
+
+    .features h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: #c77dff;
+    }
+
+    .feature-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature {
+      background: #1a0022;
+      border: 1px solid #5e2bff;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 280px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 20px #9c6cff;
+    }
+
+    .feature h3 {
+      color: #a96cff;
+      margin-bottom: 1rem;
+    }
+
+    .feature p {
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+      background: #000;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #c77dff;
+      border-radius: 50%;
+      animation: fall 1.5s linear forwards;
+      z-index: 9999;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .feature-list {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .feature {
+        width: 90%;
+      }
+    }
+
+   .stats {
+    background: #0f0018;
+    padding: 3rem 2rem;
+    text-align: center;
+   }
+
+   .stat-list {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+   }
+
+   .stat {
+    background: #1a0022;
+    border: 1px solid #5e2bff;
+    border-radius: 12px;
+    width: 200px;
+    transition: transform 0.3 ease, box-shadow 0.3 ease;
+   }
+
+   .stat:hover {
+    transform: translateY(-5px);
+    box-shadow:  0 0 15px #9c6cff;
+   }
+
+   .stat h3 {
+    color: #a96cff;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+   }
+
+   .stat p {
+    font-size: 1.1rem;
+    color: #eee;
+   }
+
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+
+  <section class="hero">
+    <h1 class="logo">CRAVEX</h1>
+    <p class="subtitle fade-in">The home of Cravex</p>
+    <div class="buttons fade-in">
+      <a class="btn" href="#">Download</a>
+      <a class="btn" href="https://discord.gg/Jbgk92rK6t" target="_blank">Join Discord</a>
+    </div>
+  </section>
+ 
+  <section class="stats fade-in">
+    <div class="stat-list">
+        <div class="stat">
+            <h3>Users</h3>
+            <p id="user-count">Loading...</p>
+        </div>
+        <div class="stat">
+            <h3>Downloads</h3>
+            <p>0</p>
+        </div>
+        <div class="stat">
+            <h3>Version</h3>
+            <p>v0.1.1</p>
+        </div>
+    </div>
+  </section>
+
+  <section class="features fade-in">
+    <h2>⚡ Features</h2>
+    <div class="feature-list">
+      <div class="feature">
+        <h3>Fast Injection</h3>
+        <p>Cravex injects in seconds with high success and low detection rate.</p>
+      </div>
+      <div class="feature">
+        <h3>Script Hub</h3>
+        <p>Access powerful preloaded scripts from a clean, intuitive interface.</p>
+      </div>
+      <div class="feature">
+        <h3>Auto Updates</h3>
+        <p>Stay up to date with the annoucements from the discord app.</p>
+      </div>
+      <div class="feature">
+        <h3>Safe & Secure</h3>
+        <p>Built-in protection and sandboxing ensures user safety.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="fade-in">
+    &copy; 2025 Cravex. All rights reserved.
+  </footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 60 },
+        color: { value: "#9c6cff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.4 },
+        size: { value: 3 },
+        move: { enable: true, speed: 1 }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" }
+        }
+      }
+    });
+  </script>
+
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+      
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const serverID = "1387070429243641939";
+
+  function fetchDiscordCount() {
+    fetch(`https://corsproxy.io/?https://discord.com/api/guilds/${serverID}/widget.json`)
+      .then(response => response.json())
+      .then(data => {
+        const memberCount = data.presence_count;
+        const userCountEl = document.getElementById("user-count");
+        if (userCountEl) {
+          userCountEl.textContent = `${memberCount} online`;
+        }
+        console.log(`Fetched Discord online count: ${memberCount} at ${new Date().toLocaleTimeString()}`);
+      })
+      .catch(error => {
+        console.error("Failed to fetch Discord data:", error);
+        const userCountEl = document.getElementById("user-count");
+        if (userCountEl) {
+          userCountEl.textContent = "Unavailable";
+        }
+      });
+  }
+
+  fetchDiscordCount();
+  setInterval(fetchDiscordCount, 10000);
+});
+</script>
+
+
+
+  
+
+</body>
+</html>
