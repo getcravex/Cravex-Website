@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas</title>
+    <link rel="icon" type="image/png" href="images/Atlas.png">
+    <meta content="Atlas" property="og:title">
+    <meta content="The Most Advanced Roblox Executor" property="og:description">
+    <meta content="images/2e43a5b.png" property="og:image">
+    <meta content="#4d9fff" data-react-helmet="true" name="theme-color">
+    <meta name="twitter:card" content="summary_large_image">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #2a2a2a, #3c3c3c);
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+        }
+
+        .navbar {
+            background-color: #111;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar .nav-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbar .brand-logo {
+            max-height: 40px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .navbar .brand-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .hero {
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: #00f7ff;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        .btn-primary {
+            background-color: #4d9fff;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a8fd2;
+            transform: scale(1.05);
+        }
+
+        .hero-stats {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            width: 150px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .review-system {
+            padding: 4rem 2rem;
+            background: #1f1f1f;
+            text-align: center;
+        }
+
+        .review-system h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .review-form {
+            margin-bottom: 40px;
+        }
+
+        .review-form input,
+        .review-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #4d9fff;
+            background: #333;
+            color: #fff;
+        }
+
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .review-card {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .review-card p {
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+
+        .review-card span {
+            display: block;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: #00f7ff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="images/Atlas.png" alt="Atlas Logo" class="brand-logo">
+                <span class="brand-text">Atlas</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#features" class="nav-item">Features</a>
+                <a href="#showcase" class="nav-item">Showcase</a>
+                <a href="#pricing" class="nav-item">Pricing</a>
+                <a href="#faq" class="nav-item">FAQ</a>
+            </div>
+            <div class="nav-actions">
+                <a href="https://discord.gg/theAtlas" class="btn-discord">Join Discord</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Next Generation <span class="gradient-text">Script Execution</span></h1>
+            <p class="hero-description">Experience unmatched power and precision with Atlas's cutting-edge Roblox executor. Instant execution, unlimited possibilities.</p>
+            <button onclick="window.location.href='https://superfiles.net/Atlas/Atlas-2.1.4.rar';" class="btn-primary">Download</button>
+        </div>
+    </section>
+
+    <section class="review-system" id="reviews">
+        <h2>User Reviews</h2>
+        <div class="review-form">
+            <input type="text" id="review-name" placeholder="Your Name" />
+            <textarea id="review-text" placeholder="Write your review here..." rows="4"></textarea>
+            <button onclick="submitReview()" class="btn-primary">Submit Review</button>
+        </div>
+        <div class="review-list" id="review-list">
+            <!-- Reviews will appear here -->
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="images/Atlas.png" alt="Atlas Logo" class="footer-logo">
+                <h3>Atlas</h3>
+                <p>Next generation Roblox script executor</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Atlas. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function submitReview() {
+            const name = document.getElementById('review-name').value;
+            const text = document.getElementById('review-text').value;
+
+            if (name && text) {
+                const reviewCard = document.createElement('div');
+                reviewCard.classList.add('review-card');
+                reviewCard.innerHTML = `
+                    <p>"${text}"</p>
+                    <span>- ${name}</span>
+                `;
+
+                document.getElementById('review-list').appendChild(reviewCard);
+                document.getElementById('review-name').value = '';
+                document.getElementById('review-text').value = '';
+            } else {
+                alert("Please fill out both fields.");
+            }
+        }
+    </script>
+</body>
+</html>
