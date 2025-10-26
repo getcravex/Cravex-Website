@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirmDownload) {
             confirmDownload.addEventListener('click', function(e) {
                 e.preventDefault();
-                open("https://github.com/getcravex/Cravex-Download/releases/download/External/Cravex.External.rar");
+                open("https://work.ink/26DP/05c752cc-02a8-4c15-9af8-811c5f10ac4f");
                 downloadModal.style.display = 'none';
             });
         }
