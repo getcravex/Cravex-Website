@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #191919;
+            --accent-color: #9543ef;
+            --accent-glow: rgba(149, 67, 239, 0.4);
+            --card-bg: rgba(35, 35, 35, 0.7);
+            --text-color: rgba(255, 255, 255, 0.92);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --border: rgba(149, 67, 239, 0.15);
+            --success: #4CAF50;
+            --danger: #f44336;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'JetBrains Mono', monospace;
+            transition: var(--transition);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(149, 67, 239, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 85% 85%, rgba(149, 67, 239, 0.03) 0%, transparent 50%);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(40, 40, 40, 0.5);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7d2cd1;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Search Box */
+        .search-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            width: 100%;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            background: rgba(40, 40, 40, 0.6);
+            color: var(--text-color);
+            border-radius: var(--radius-md);
+            font-family: 'JetBrains Mono', monospace;
+            outline: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* Tabs */
+        .tabs-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: var(--radius-md);
+            padding: 5px;
+            border: 1px solid var(--border);
+            margin-bottom: 15px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .tab.active {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 2px 8px rgba(149, 67, 239, 0.3);
+        }
+
+        /* Filters */
+        .filters {
+            width: 100%;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            animation: fadeIn 0.8s ease 0.2s both;
+        }
+
+        .filter-select {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            background: rgba(40, 40, 40, 0.6);
+            color: var(--text-color);
+            border-radius: var(--radius-md);
+            font-family: 'JetBrains Mono', monospace;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* Script Cards */
+        .scripts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .script-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transform: translateY(0);
+            opacity: 0;
+            animation: cardEnter 0.5s ease forwards;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        @keyframes cardEnter {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .script-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 8px 25px rgba(149, 67, 239, 0.3);
+        }
+
+        .script-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .script-image-container {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .script-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .script-card:hover .script-image {
+            transform: scale(1.05);
+        }
+
+        .script-content {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .script-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .script-card:hover .script-title {
+            color: var(--accent-color);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .script-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .script-info i {
+            color: var(--accent-color);
+            width: 16px;
+            text-align: center;
+        }
+
+        .script-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+            padding-top: 12px;
+            margin-bottom: 5px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-item i {
+            color: var(--accent-color);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(40, 40, 40, 0.8);
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(70vh - 100px);
+        }
+
+        .modal-script {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            background: rgba(40, 40, 40, 0.8);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .btn-primary:hover {
+            background: #7d2cd1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(149, 67, 239, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #3e8e41;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(40, 40, 40, 0.8);
+            color: var(--text-color);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(50, 50, 50, 0.8);
+            transform: translateY(-2px);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .remove-script-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .script-card:hover .remove-script-btn {
+            opacity: 1;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 12px 22px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            display: none;
+            z-index: 1000;
+            animation: slideInRight 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
+            box-shadow: 0 5px 20px rgba(149, 67, 239, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .scripts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-wrap: wrap;
+            }
+            
+            .filter-select {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Script Modal -->
+    <div class="modal" id="scriptModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Script Details</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-script" id="modalScriptContent">Loading script...</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="saveScriptBtn">
+                    <i class="fas fa-bookmark"></i>
+                    Save Script
+                </button>
+                <button class="btn btn-primary" id="modalCopyButton">
+                    <i class="fas fa-copy"></i>
+                    Copy Script
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search scripts..." id="searchInput">
+            </div>
+            <div class="filters">
+                <select class="filter-select" id="scriptType">
+                    <option value="">All Types</option>
+                    <option value="free">Free</option>
+                    <option value="paid">Paid</option>
+                </select>
+                
+                <select class="filter-select" id="sortBy">
+                    <option value="updatedAt">Recently Updated</option>
+                    <option value="views">Most Views</option>
+                    <option value="likeCount">Most Likes</option>
+                    <option value="createdAt">Newest</option>
+                </select>
+                
+                <select class="filter-select" id="maxResults">
+                    <option value="10">10 Results</option>
+                    <option value="20" selected>20 Results</option>
+                    <option value="30">30 Results</option>
+                    <option value="50">50 Results</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="cloud">Cloud Scripts</div>
+            <div class="tab" data-tab="saved">Saved Scripts</div>
+        </div>
+    </div>
+
+    <div class="content-section active" id="cloudScripts">
+        <div class="scripts-grid" id="scriptsContainer">
+            <div class="empty-state">
+                <i class="fas fa-spinner fa-spin"></i>
+                <h3>Loading scripts...</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section" id="savedScripts">
+        <div class="scripts-grid" id="localScriptsGrid">
+            <div class="empty-state">
+                <i class="fas fa-book-open"></i>
+                <h3>No saved scripts</h3>
+                <p>Save scripts by clicking the bookmark icon in the script modal</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Script copied!</span>
+    </div>
+
+    <script>
+        let scriptsData = [];
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentScriptIndex = -1;
+        let currentScript = null;
+        const proxies = [
+            'https://api.codetabs.com/v1/proxy/?quest=',
+            'https://thingproxy.freeboard.io/fetch/',
+            'https://corsproxy.io/?'
+        ];
+        let currentProxy = 0;
+        let currentTab = 'cloud';
+
+        // Local storage functions
+        function getLocalScripts() {
+            const scripts = localStorage.getItem('savedScripts');
+            return scripts ? JSON.parse(scripts) : [];
+        }
+
+        function saveLocalScript(script) {
+            const scripts = getLocalScripts();
+            // Check if script already exists
+            if (!scripts.some(s => s.title === script.title && s.script === script.script)) {
+                scripts.push(script);
+                localStorage.setItem('savedScripts', JSON.stringify(scripts));
+                return true;
+            }
+            return false;
+        }
+
+        function removeLocalScript(index) {
+            const scripts = getLocalScripts();
+            scripts.splice(index, 1);
+            localStorage.setItem('savedScripts', JSON.stringify(scripts));
+            renderLocalScripts();
+            return scripts;
+        }
+
+        function renderLocalScripts() {
+            const container = document.getElementById('localScriptsGrid');
+            const scripts = getLocalScripts();
+            
+            if (scripts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No saved scripts</h3>
+                        <p>Save scripts by clicking the bookmark icon in the script modal</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            scripts.forEach((script, index) => {
+                html += `
+                    <div class="script-card" style="animation-delay: ${index * 0.05}s">
+                        <button class="remove-script-btn" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="script-image-container">
+                            <img
+                                src="${script.image || 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMzAwIDE4MCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiMzMzMzMzMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYjBiMGIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4='}"
+                                class="script-image"
+                                onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMzAwIDE4MCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiMzMzMzMzMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYjBiMGIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5JbWFnZSBFcnJvcjwvdGV4dD48L3N2Zz4='"
+                            >
+                        </div>
+                        <div class="script-content">
+                            <h3 class="script-title" title="${script.title}">${script.title}</h3>
+                            <p class="script-info">
+                                <i class="fas fa-gamepad"></i>
+                                ${script.game || 'No game specified'}
+                            </p>
+                            <div class="script-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>${script.date ? new Date(script.date).toLocaleDateString() : 'N/A'}</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" data-index="${index}" data-local="true" style="width: 100%; margin-top: auto;">
+                                <i class="fas fa-copy"></i>
+                                Copy Script
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Add click event to copy buttons
+            document.querySelectorAll('#localScriptsGrid .btn-primary').forEach(btn => {
+                btn.addEventListener('click', handleLocalCopy);
+            });
+            
+            // Add click event to remove buttons
+            document.querySelectorAll('.remove-script-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const index = btn.dataset.index;
+                    removeLocalScript(index);
+                    showMessage('Script removed from your collection');
+                });
+            });
+            
+            // Add click event to cards to open modal
+            document.querySelectorAll('#localScriptsGrid .script-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Don't open modal if clicking on a button
+                    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+                    
+                    const index = Array.from(card.parentElement.children).indexOf(card);
+                    const scripts = getLocalScripts();
+                    openScriptModal(index, true);
+                });
+            });
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.tab === tab);
+            });
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.toggle('active', section.id === `${tab}Scripts`);
+            });
+            
+            if (tab === 'saved') {
+                renderLocalScripts();
+            }
+        }
+
+        async function fetchWithRetry(url, retries = 3) {
+            try {
+                const proxyUrl = proxies[currentProxy] + encodeURIComponent(url);
+                const response = await fetch(proxyUrl, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+                
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                if (retries > 0) {
+                    currentProxy = (currentProxy + 1) % proxies.length;
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    return fetchWithRetry(url, retries - 1);
+                }
+                throw error;
+            }
+        }
+
+        async function loadScripts(search = '', page = 1) {
+            const container = document.getElementById('scriptsContainer');
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><h3>Loading scripts...</h3></div>';
+            
+            try {
+                const scriptType = document.getElementById('scriptType').value;
+                const sortBy = document.getElementById('sortBy').value;
+                const maxResults = document.getElementById('maxResults').value;
+                
+                // Use a direct API endpoint that doesn't require CORS
+                let apiUrl;
+                if (search) {
+                    apiUrl = `https://scriptblox.com/api/script/search?q=${encodeURIComponent(search)}&page=${page}&max=${maxResults}`;
+                } else {
+                    apiUrl = `https://scriptblox.com/api/script/fetch?page=${page}&max=${maxResults}`;
+                }
+                
+                if (scriptType) apiUrl += `&mode=${scriptType}`;
+                if (sortBy) apiUrl += `&sortBy=${sortBy}`;
+                
+                // Try direct fetch first
+                let data;
+                try {
+                    const response = await fetch(apiUrl);
+                    data = await response.json();
+                } catch (directError) {
+                    // If direct fetch fails, use proxy
+                    console.log('Direct fetch failed, using proxy...');
+                    data = await fetchWithRetry(apiUrl);
+                }
+                
+                // Handle response data
+                if (data && data.result && data.result.scripts) {
+                    scriptsData = data.result.scripts;
+                    totalPages = data.result.totalPages || 1;
+                } else if (data && Array.isArray(data)) {
+                    scriptsData = data;
+                    totalPages = 1;
+                } else {
+                    scriptsData = [];
+                    totalPages = 1;
+                }
+                
+                currentPage = page;
+                
+                renderScripts();
+            } catch (error) {
+                console.error('Error fetching scripts:', error);
+                showMessage(`Error: ${error.message}`);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Failed to load scripts</h3>
+                        <p>We couldn't connect to the server. Please check your internet connection and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderScripts() {
+            const container = document.getElementById('scriptsContainer');
+            
+            if (scriptsData.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No scripts found</h3>
+                        <p>Try adjusting your search or filters to find what you're looking for.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            scriptsData.forEach((script, index) => {
+                const raw = script.image;
+                const imageUrl = raw
+                    ? (raw.startsWith('http') ? raw : `https://scriptblox.com${raw}`)
+                    : 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMzAwIDE4MCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiMyNTI1MjUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYjBiMGIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+    
+                html += `
+                    <div class="script-card" style="animation-delay: ${index * 0.05}s" data-index="${index}">
+                        ${script.paid ? '<span class="script-badge">Premium</span>' : ''}
+                        <div class="script-image-container">
+                            <img
+                                src="${imageUrl}"
+                                class="script-image"
+                                onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMzAwIDE4MCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxODAiIGZpbGw9IiMyNTI1MjUiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkludGVyIiBmb250LXNpemU9IjE0IiBmaWxsPSIjYjBiMGIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIj5JbWFnZSBFcnJvcjwvdGV4dD48L3N2Zz4='"
+                            >
+                        </div>
+                        <div class="script-content">
+                            <h3 class="script-title" title="${script.title}">${script.title}</h3>
+                            <p class="script-info">
+                                <i class="fas fa-gamepad"></i>
+                                ${script.game?.name || 'No game specified'}
+                            </p>
+                            <div class="script-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i>
+                                    <span>${script.views?.toLocaleString() || 'N/A'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span>${script.likeCount?.toLocaleString() || 'N/A'}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>${script.updatedAt ? new Date(script.updatedAt).toLocaleDateString() : 'N/A'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Add click event to cards to open modal
+            document.querySelectorAll('.script-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Don't open modal if clicking on a child element that has its own click handler
+                    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+                    
+                    const index = card.dataset.index;
+                    openScriptModal(index);
+                });
+            });
+        }
+
+        function openScriptModal(index, isLocal = false) {
+            let script;
+            if (isLocal) {
+                const scripts = getLocalScripts();
+                script = scripts[index];
+                currentScript = {...script, isLocal: true, localIndex: index};
+            } else {
+                script = scriptsData[index];
+                currentScript = {...script, isLocal: false, index: index};
+            }
+            
+            if (!script) return;
+            
+            const modal = document.getElementById('scriptModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalScriptContent');
+            const modalCopyBtn = document.getElementById('modalCopyButton');
+            const saveScriptBtn = document.getElementById('saveScriptBtn');
+            
+            modalTitle.textContent = script.title;
+            modalContent.textContent = script.script || 'No script content available';
+            
+            // Update save button based on whether script is already saved
+            const scripts = getLocalScripts();
+            const isSaved = scripts.some(s => s.title === script.title && s.script === script.script);
+            
+            if (isSaved) {
+                saveScriptBtn.innerHTML = '<i class="fas fa-check"></i> Saved';
+                saveScriptBtn.classList.add('btn-success');
+                saveScriptBtn.classList.remove('btn-secondary');
+            } else {
+                saveScriptBtn.innerHTML = '<i class="fas fa-bookmark"></i> Save Script';
+                saveScriptBtn.classList.add('btn-secondary');
+                saveScriptBtn.classList.remove('btn-success');
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Set up copy button
+            modalCopyBtn.onclick = () => {
+                navigator.clipboard.writeText(script.script).then(() => {
+                    showMessage('Script copied to clipboard!');
+                }).catch(err => {
+                    showMessage('Failed to copy script');
+                    console.error('Failed to copy:', err);
+                });
+            };
+        }
+
+        function closeScriptModal() {
+            const modal = document.getElementById('scriptModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            currentScript = null;
+        }
+
+        function saveCurrentScript() {
+            if (!currentScript) return;
+            
+            const scriptToSave = {
+                title: currentScript.title,
+                script: currentScript.script,
+                game: currentScript.game?.name || 'No game specified',
+                image: currentScript.image,
+                date: new Date().toISOString()
+            };
+            
+            const saved = saveLocalScript(scriptToSave);
+            const saveScriptBtn = document.getElementById('saveScriptBtn');
+            
+            if (saved) {
+                saveScriptBtn.innerHTML = '<i class="fas fa-check"></i> Saved';
+                saveScriptBtn.classList.add('btn-success');
+                saveScriptBtn.classList.remove('btn-secondary');
+                showMessage('Script saved to your collection!');
+                
+                // If we're viewing saved scripts, refresh the list
+                if (currentTab === 'saved') {
+                    renderLocalScripts();
+                }
+            } else {
+                showMessage('This script is already in your collection');
+            }
+        }
+
+        function handleLocalCopy(event) {
+            event.stopPropagation();
+            const index = event.target.dataset.index;
+            const scripts = getLocalScripts();
+            const script = scripts[index];
+            
+            if (!script) {
+                showMessage('No script found');
+                return;
+            }
+
+            navigator.clipboard.writeText(script.script).then(() => {
+                showMessage('Script copied to clipboard!');
+                
+                // Button animation
+                const button = event.target;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.classList.add('btn-success');
+                button.classList.remove('btn-primary');
+                
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-copy"></i> Copy Script';
+                    button.classList.add('btn-primary');
+                    button.classList.remove('btn-success');
+                }, 2000);
+            }).catch(err => {
+                showMessage('Failed to copy script');
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        function searchScripts() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            loadScripts(searchTerm, 1);
+        }
+
+        function showMessage(text) {
+            const notif = document.getElementById('notification');
+            notif.querySelector('span').textContent = text;
+            notif.style.display = 'flex';
+            notif.style.animation = 'none';
+            void notif.offsetWidth; // Trigger reflow
+            notif.style.animation = 'slideInRight 0.5s ease, fadeOut 0.5s ease 2.5s forwards';
+        }
+
+        function setupFilterListeners() {
+            document.getElementById('scriptType').addEventListener('change', searchScripts);
+            document.getElementById('sortBy').addEventListener('change', searchScripts);
+            document.getElementById('maxResults').addEventListener('change', searchScripts);
+        }
+
+        // Debounce function for search input
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
+        window.onload = () => {
+            loadScripts();
+            setupFilterListeners();
+            
+            // Add debounced search on input
+            const searchInput = document.getElementById('searchInput');
+            const debouncedSearch = debounce(searchScripts, 500);
+            searchInput.addEventListener('input', debouncedSearch);
+            
+            // Also search on Enter
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') searchScripts();
+            });
+            
+            // Modal close button
+            document.getElementById('modalClose').addEventListener('click', closeScriptModal);
+            
+            // Close modal when clicking outside
+            document.getElementById('scriptModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('scriptModal')) {
+                    closeScriptModal();
+                }
+            });
+            
+            // Tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    switchTab(tab.dataset.tab);
+                });
+            });
+            
+            // Save script button
+            document.getElementById('saveScriptBtn').addEventListener('click', saveCurrentScript);
+        };
+    </script>
+</body>
+</html>
