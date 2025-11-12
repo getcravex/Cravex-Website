@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirmDownload) {
             confirmDownload.addEventListener('click', function(e) {
                 e.preventDefault();
-                open("https://work.ink/27rb/db3ef346-d67d-4222-90c3-9cdcce164de7");
+                open("https://work.ink/27rb/c93cfdf5-5f0a-4841-a05b-e6ea1804091d?__cf_chl_tk=PHHH3olYFR4AvnTyyA.06iG3qjgDwR9XHTYqcMD.cpg-1762991175-1.0.1.1-0hvXo_oWEVqhECgOYwPjQhJ7RmixwN_WLHERHN.MlOY");
                 downloadModal.style.display = 'none';
             });
         }
@@ -83,5 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 
 
