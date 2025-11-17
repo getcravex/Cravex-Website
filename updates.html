@@ -61,8 +61,11 @@
     </footer>
 
 <script>
-    fetch('updates.json')
-        .then(res => res.json())
+    fetch('https://raw.githubusercontent.com/getcravex/Cravex-Website/refs/heads/main/update.json')
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to load updates');
+            return res.json();
+        })
         .then(data => {
             const timeline = document.getElementById('timeline');
             data.forEach(item => {
@@ -72,14 +75,17 @@
                     <div class="timeline-date">${item.date}</div>
                     <div class="timeline-content">
                         <h4 class="update-title">
-                            ${item.version ? `<span class="version-tag">${item.version}</span>` :''}
-                            | ${item.title || ''}
+                            ${item.version ? `<span class="version-tag">${item.version}</span>` : ''}
+                            ${item.title || ''}
                         </h4>
                         <div>${item.content}</div>
                     </div>
                 `;
                 timeline.appendChild(div);
             });
+        })
+        .catch(err => {
+            document.getElementById('timeline').innerHTML = '<p style="color:red;text-align:center;">Failed to load updates.</p>';
         });
 </script>
 </body>
