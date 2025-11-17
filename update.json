@@ -1,43 +1,43 @@
 [
   {
     "date": "07/11/2025",
-    "version": "v1.8.2",
+    "version": "v1.1.7",
     "title": "External Update",
     "content": "Updated Latest version<br>Still no fixes on the TP Handler :("
   },
   {
     "date": "07/11/2025",
-    "version": "v1.8.1",
+    "version": "v1.1.6",
     "title": "External Update",
     "content": "Updated Latest version"
   },
   {
     "date": "15/10/2025",
-    "version": "v1.8.0",
+    "version": "v1.1.5",
     "title": "External Update",
     "content": "Updated Latest version<br>Muscle Legends Support<br>Ninja Legends Support"
   },
   {
     "date": "15/10/2025",
-    "version": "v1.7.9",
+    "version": "v1.1.4",
     "title": "External Patch Update",
     "content": "Dahood: Anti Stomp Release + Fix Auto Stomp"
   },
   {
     "date": "05/10/2025",
-    "version": "v1.7.8",
+    "version": "v1.1.3",
     "title": "",
     "content": "Website Rewrite<br>Added a new Theme for the website with a new Url Provider"
   },
   {
     "date": "02/10/2025",
-    "version": "v1.7.7",
+    "version": "v1.1.2",
     "title": "External Update",
     "content": "Updated to Latest Version<br>Added features for \"Kill Noob Simulator\""
   },
   {
     "date": "02/10/2025",
-    "version": "v1.7.6",
+    "version": "v1.1.1",
     "title": "External Major Update",
     "content": "Dahood:<br>Fly Car + Rapid Fire Release<br>Aimlock Hitpart"
   }
