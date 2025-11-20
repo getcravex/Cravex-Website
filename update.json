@@ -1,5 +1,11 @@
 [
   {
+    "date": "20/11/2025",
+    "version": "v1.1.8",
+    "title": "External Update",
+    "content": "Updated to latest version"
+  },
+  {
     "date": "17/11/2025",
     "version": "Website",
     "title": "Website Update",
