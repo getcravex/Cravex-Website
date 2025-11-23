@@ -1,6 +1,12 @@
 [
   {
     "date": "20/11/2025",
+    "version": "v1.1.9",
+    "title": "External Update",
+    "content": "Fixed some small bugs"
+  },
+  {
+    "date": "20/11/2025",
     "version": "v1.1.8",
     "title": "External Update",
     "content": "Updated to latest version"
